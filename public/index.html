@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Multimedia Manager</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+
+<body>
+    <h1>Multimedia Manager</h1>
+    <div data-multimedia-manager 
+        data-multimedia-title="Arrastra imágenes o vídeos aquí para subir" 
+        data-multimedia-subtitle="O haz clic aquí para buscarlas"
+        data-multimedia-list="https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg,https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg"
+    ></div>
+
+    <h3>Dynamically created</h3>
+    <button id="create-manager">Create manager</button>
+
+    <script>
+        function createManager(e) {
+            const button = e.currentTarget;
+            const div = document.createElement("div");
+
+            div.dataset["multimediaManager"] = "";
+            div.dataset["multimediaTitle"] = "Arrastra algo aquí";
+            div.dataset["multimediaSubtitle"] = "O simplemente haz clic";
+            // div.dataset["multimediaIcon"] = "cloud_upload";
+            div.dataset["multimediaList"] = "https://www.collinsdictionary.com/images/full/tshirt_204029461_1000.jpg";
+            button.after(div);
+            window.__multimediaManager.initializeManager(div);
+            button.removeEventListener("click", createManager);
+        }
+
+        (function () {
+            document.getElementById("create-manager").addEventListener("click", createManager)
+        })();
+    </script>
+</body>
+
+</html>
