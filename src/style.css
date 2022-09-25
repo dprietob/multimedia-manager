@@ -27,7 +27,7 @@
 
 .mm-dnd:hover {
     border-color: #719ce2;
-    background: #d9ebff;
+    background: #e3f0ff;
 }
 
 .mm-dnd .mm-title {
@@ -65,10 +65,11 @@
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     margin: 0 10px 10px 0;
+    padding: 10px;
     overflow: hidden;
 }
 
-.mm-wrapper .mm-miniature.mm-cover {
+.mm-wrapper .mm-miniature:first-child {
     width: 210px;
     height: 210px;
 }
@@ -89,14 +90,28 @@
     transition: all 250ms;
 }
 
-.mm-wrapper .mm-miniature .mm-overlay:hover {
+.mm-wrapper .mm-miniature .mm-overlay.mm-move:hover {
     opacity: 1;
 }
 
-.mm-wrapper .mm-miniature .mm-overlay i {
+.mm-wrapper .mm-miniature .mm-overlay.mm-delete i {
     position: absolute;
     top: calc(50% - 15px);
     left: calc(50% - 15px);
-    font-size: 30px;
-    color: #f40606;
+    font-size: 20px;
+    padding: 5px;
+    color: #ffffff;
+    background: #f00;
+    border-radius: 50%;
+}
+
+.mm-wrapper .mm-miniature .mm-overlay.mm-move i {
+    position: absolute;
+    top: calc(50% - 15px);
+    left: calc(50% - 15px);
+    font-size: 20px;
+    padding: 5px;
+    color: #575757;
+    background: #ececec;
+    border-radius: 50%;
 }
