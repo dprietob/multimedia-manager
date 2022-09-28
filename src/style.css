@@ -52,12 +52,12 @@
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     margin-top: 15px;
-    padding: 10px;
+    padding: 10px 10px 0;
     height: 232px;
     overflow: auto;
 }
 
-.mm-wrapper .mm-miniature {
+.mm-wrapper .mm-multimedia {
     position: relative;
     float: left;
     width: 100px;
@@ -69,16 +69,16 @@
     overflow: hidden;
 }
 
-.mm-wrapper .mm-miniature:first-child {
+.mm-wrapper .mm-multimedia:first-child {
     width: 210px;
     height: 210px;
 }
 
-.mm-wrapper .mm-miniature img {
+.mm-wrapper .mm-multimedia img {
     max-width: 100%;
 }
 
-.mm-wrapper .mm-miniature .mm-overlay {
+.mm-wrapper .mm-multimedia .mm-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -90,11 +90,16 @@
     transition: all 250ms;
 }
 
-.mm-wrapper .mm-miniature .mm-overlay.mm-move:hover {
+.mm-wrapper .mm-multimedia .mm-overlay.visible,
+.mm-wrapper .mm-multimedia .mm-overlay.mm-move:hover {
     opacity: 1;
 }
 
-.mm-wrapper .mm-miniature .mm-overlay.mm-delete i {
+.mm-wrapper .mm-multimedia .mm-overlay.hidden {
+    display: none;
+}
+
+.mm-wrapper .mm-multimedia .mm-overlay.mm-remove i {
     position: absolute;
     top: calc(50% - 15px);
     left: calc(50% - 15px);
@@ -103,9 +108,14 @@
     color: #ffffff;
     background: #f00;
     border-radius: 50%;
+    transition: all 250ms;
 }
 
-.mm-wrapper .mm-miniature .mm-overlay.mm-move i {
+.mm-wrapper .mm-multimedia .mm-overlay.mm-remove i:hover {
+    background: #FF7272
+}
+
+.mm-wrapper .mm-multimedia .mm-overlay.mm-move i {
     position: absolute;
     top: calc(50% - 15px);
     left: calc(50% - 15px);

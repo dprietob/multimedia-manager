@@ -1,9 +1,8 @@
-import { createMiniature } from './miniature'
+import { createMultimedia } from './multimedia'
 import { createDragnDrop } from './dragndrop'
 import { createWrapper } from './wrapper'
 
 export const initializeManager = (manager) => {
-    // Loads the multimedia list defined in the data-multimedia-list attribute.
     const loadMultimediaList = () => {
         if (typeof manager.dataset.multimediaList !== 'undefined' &&
             manager.dataset.multimediaList.length) {
@@ -12,53 +11,64 @@ export const initializeManager = (manager) => {
         return []
     }
 
-    // Inserts the loaded multimedia into the wrapper.
     const insertLoadedMultimedia = () => {
         for (const multimedia of multimediaList) {
             wrapper.insertAdjacentElement(
                 'beforeend',
-                createMiniature(multimedia, !wrapper.hasCover())
+                createMultimedia(multimedia, manager.dataset)
             )
         }
     }
 
-    // Dispatches the updateTagsList event. TODO
-    const dispatchUpdateTagsListEvent = () => {
+    const dispatchUpdateMultimediaListEvent = () => {
         manager.dispatchEvent(new CustomEvent(
-            'updateTagsList',
+            'updateMultimediaList',
             {
                 bubbles: true,
                 detail: {
-                    tagsList: tagsList
+                    multimediaList
                 }
             }
         ))
     }
 
-    // Inserts a new tag. TODO
-    const insertTag = (key) => {
-        if (isFinishKey(key)) {
-            const text = extractText()
-            if (text.length) {
-                tagsList.push(text)
-                manager.dataset['tagsList'] = tagsList
-                wrapper.insertAdjacentElement('beforeend', createTag(text))
-                dispatchUpdateTagsListEvent()
+    const insertMultimedia = (key) => {
+        // if (isFinishKey(key)) {
+        //     const text = extractText()
+        //     if (text.length) {
+        //         tagsList.push(text)
+        //         manager.dataset['tagsList'] = tagsList
+        //         wrapper.insertAdjacentElement('beforeend', createTag(text))
+        //         dispatchUpdateTagsListEvent()
+        //     }
+        // }
+    }
+
+    const removeMultimedia = (e) => {
+        const source = e.detail.source
+        multimediaList = multimediaList.filter((value) => {
+            return value !== source
+        })
+        manager.dataset.multimediaList = multimediaList
+        dispatchUpdateMultimediaListEvent()
+    }
+
+    const updateMultimedia = (e) => {
+        const source = e.detail.source
+        const newIndex = e.detail.newIndex
+        const oldIndex = e.detail.oldIndex
+
+        if (newIndex >= multimediaList.length) {
+            let k = newIndex - multimediaList.length + 1
+            while (k--) {
+                multimediaList.push(source)
             }
         }
+        multimediaList.splice(newIndex, 0, multimediaList.splice(oldIndex, 1)[0])
+        manager.dataset.multimediaList = multimediaList
+        dispatchUpdateMultimediaListEvent()
     }
 
-    // Removes an inserted tag. TODO
-    const removeTag = (e) => {
-        const text = e.detail.tagValue
-        tagsList = tagsList.filter((value) => {
-            return value !== text
-        })
-        manager.dataset.tagsList = tagsList
-        dispatchUpdateTagsListEvent()
-    }
-
-    // Multimedia Manager initialization.
     const dragndrop = createDragnDrop(manager.dataset)
     const wrapper = createWrapper()
     let multimediaList = loadMultimediaList()
@@ -70,6 +80,7 @@ export const initializeManager = (manager) => {
 
     insertLoadedMultimedia()
 
-    dragndrop.addEventListener('keyup', (e) => insertTag(e.keyCode))
-    manager.addEventListener('removedTag', (e) => removeTag(e))
+    dragndrop.addEventListener('keyup', (e) => insertMultimedia(e.keyCode))
+    manager.addEventListener('removedMultimedia', (e) => removeMultimedia(e))
+    manager.addEventListener('updatedMultimedia', (e) => updateMultimedia(e))
 }
